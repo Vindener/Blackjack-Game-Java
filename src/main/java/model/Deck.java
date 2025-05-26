@@ -1,17 +1,14 @@
 package model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Deck {
-    private final Stack<Card> cards = new Stack<>();
+    private final List<Card> cards = new ArrayList<>();
 
-    public Deck() {
-        for (Card.Suit suit : Card.Suit.values()) {
-            for (Card.Rank rank : Card.Rank.values()) {
-                cards.push(new Card(suit, rank));
-            }
-        }
-        shuffle();
+    public void addCard(Card card) {
+        cards.add(card);
     }
 
     public void shuffle() {
@@ -19,7 +16,10 @@ public class Deck {
     }
 
     public Card drawCard() {
-        if (cards.isEmpty()) throw new IllegalStateException("Deck is empty");
-        return cards.pop();
+        return cards.remove(0);
+    }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
     }
 }

@@ -9,7 +9,7 @@ public class GameEngine {
     private final Player dealer;
 
     public GameEngine() {
-        this.deck = new Deck();
+        this.deck = factory.DeckFactory.createStandardDeck();
         this.player = new Player();
         this.dealer = new Player();
         startRound();
