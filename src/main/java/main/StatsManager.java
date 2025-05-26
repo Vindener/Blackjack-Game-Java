@@ -12,20 +12,20 @@ import java.nio.file.Paths;
 
 public class StatsManager {
     private static final String SAVE_FILE = "data/stats.json";
+    private static StatsManager instance;
 
-    public static void showStats() {
-        try {
-            String content = new String(Files.readAllBytes(Paths.get(SAVE_FILE)), StandardCharsets.UTF_8);
-            JSONObject stats = (JSONObject) new JSONParser().parse(content);
-            System.out.println("\n=== Statistics");
-            System.out.println("Player Wins: " + stats.getOrDefault("playerWins", 0));
-            System.out.println("Dealer Wins: " + stats.getOrDefault("dealerWins", 0));
-        } catch (IOException | ParseException e) {
-            System.out.println("No statistics found or failed to read file.");
-        }
+    private StatsManager() {
+        // приватний конструктор для Singleton
     }
 
-    public static void saveResult(String result) {
+    public static StatsManager getInstance() {
+        if (instance == null) {
+            instance = new StatsManager();
+        }
+        return instance;
+    }
+
+    public void saveResult(String result) {
         JSONObject stats = new JSONObject();
         int playerWins = 0;
         int dealerWins = 0;
@@ -48,6 +48,20 @@ public class StatsManager {
             System.out.println("Game stats saved to " + SAVE_FILE);
         } catch (IOException e) {
             System.out.println("Failed to save stats: " + e.getMessage());
+        }
+    }
+
+    public void showStats() {
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(SAVE_FILE)), StandardCharsets.UTF_8);
+            JSONObject stats = (JSONObject) new JSONParser().parse(content);
+            int playerWins = ((Long) stats.getOrDefault("playerWins", 0L)).intValue();
+            int dealerWins = ((Long) stats.getOrDefault("dealerWins", 0L)).intValue();
+            System.out.println("Statistics:");
+            System.out.println("Player wins: " + playerWins);
+            System.out.println("Dealer wins: " + dealerWins);
+        } catch (IOException | ParseException e) {
+            System.out.println("No statistics available yet.");
         }
     }
 }

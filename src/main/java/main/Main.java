@@ -18,7 +18,7 @@ public class Main {
             if (input.equals("1")) {
                 playGame(scanner);
             } else if (input.equals("2")) {
-                StatsManager.showStats();
+                StatsManager.getInstance().showStats();
             } else if (input.equals("3")) {
                 System.out.println("Goodbye!");
                 break;
@@ -60,6 +60,6 @@ public class Main {
             }
         }
 
-        StatsManager.saveResult(result);
+        StatsManager.getInstance().saveResult(result);
     }
 }
