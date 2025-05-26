@@ -16,8 +16,11 @@ This is a Java-based implementation of the classic card game Blackjack. The appl
 
 ## Relevant files:
 - [Main.java](./src/main/java/main/Main.java) – user interaction and game flow
-- [GameEngine.java](./src/main/java/game/GameEngine.java) – game logic
-- [StatsManager.java](./src/main/java/main/StatsManager.java) – statistics load/save
+- [GameEngine.java](./src/main/java/game/GameEngine.java) – core game mechanics
+- [StatsManager.java](./src/main/java/main/StatsManager.java) – save/load stats logic
+- [DeckFactory.java](./src/main/java/factory/DeckFactory.java) – generates and shuffles the full deck
+- [CardFactory.java](./src/main/java/factory/CardFactory.java) – creates individual cards
+- [DealerStrategy.java](./src/main/java/strategy/DealerStrategy.java) – AI logic for dealer
 
 ---
 
@@ -59,12 +62,22 @@ Minimal conditions, clear responsibilities:
 Only essential features implemented:
 - No multiplayer, AI, or external libraries beyond JSON
 - No GUI — console UI is sufficient
+
 ---
 
 ## Design Patterns
 
 - **Separation of Concerns** (not a GoF pattern, but important architectural principle)
-- Could be extended to include Factory or Strategy patterns for AI/Dealer logic in future versions
+
+### Singleton Pattern
+- [`StatsManager`](./src/main/java/main/StatsManager.java) is implemented as a Singleton to ensure only one instance manages statistics.
+
+### Strategy Pattern
+- [`DealerStrategy`](./src/main/java/strategy/DealerStrategy.java) and interface [`PlayStrategy`](./src/main/java/strategy/PlayStrategy.java) abstract the dealer’s playing logic from the game flow.
+
+### Factory Pattern
+- [`DeckFactory`](./src/main/java/factory/DeckFactory.java) and [`CardFactory`](./src/main/java/factory/CardFactory.java) encapsulate deck and card creation, improving scalability.
+
 
 ---
 
@@ -81,6 +94,8 @@ Automatically created and updated after each game.
 ## Git Workflow Suggestion
 
 - Work in branches
+- Develop in `feature/*` branches
+- Merge via Pull Requests
 - Keep commits small and descriptive
 
 ---
