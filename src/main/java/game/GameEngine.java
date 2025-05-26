@@ -2,11 +2,13 @@ package game;
 
 import model.Deck;
 import model.Player;
+import strategy.PlayStrategy;
 
 public class GameEngine {
     private final Deck deck;
     private final Player player;
     private final Player dealer;
+    private PlayStrategy dealerStrategy;
 
     public GameEngine() {
         this.deck = new Deck();
@@ -40,4 +42,16 @@ public class GameEngine {
 
     public Player getPlayer() { return player; }
     public Player getDealer() { return dealer; }
+
+    public void setDealerStrategy(PlayStrategy strategy) {
+        this.dealerStrategy = strategy;
+    }
+
+    public void dealerPlay() {
+        if (dealerStrategy != null) {
+            dealerStrategy.play(this);
+        } else {
+            dealerTurn();
+        }
+    }
 }

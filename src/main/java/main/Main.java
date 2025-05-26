@@ -2,6 +2,7 @@ package main;
 
 import game.GameEngine;
 import java.util.Scanner;
+import strategy.DealerStrategy;
 
 public class Main {
     public static void main(String[] args) {
@@ -30,6 +31,7 @@ public class Main {
 
     private static void playGame(Scanner scanner) {
         GameEngine game = new GameEngine();
+        game.setDealerStrategy(new DealerStrategy());  // застосування патерну Strategy
         String result = null;
 
         while (true) {
@@ -47,7 +49,7 @@ public class Main {
                     break;
                 }
             } else if (choice.equalsIgnoreCase("s")) {
-                game.dealerTurn();
+                game.dealerPlay();  // <- виклик стратегії
                 System.out.println("\nFinal Player hand: " + game.getPlayer().getHand() + " (score: " + game.getPlayer().getScore() + ")");
                 System.out.println("Final Dealer hand: " + game.getDealer().getHand() + " (score: " + game.getDealer().getScore() + ")");
                 result = game.determineWinner();
