@@ -11,7 +11,7 @@ public class GameEngine {
     private PlayStrategy dealerStrategy;
 
     public GameEngine() {
-        this.deck = new Deck();
+        this.deck = factory.DeckFactory.createStandardDeck();
         this.player = new Player();
         this.dealer = new Player();
         startRound();
